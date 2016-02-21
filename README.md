@@ -24,14 +24,22 @@ cabal install
 ```haskell
 import Sound.Tidal.Volca
 import Sound.Tidal.VolcaKeys
+import Sound.Tidal.VolcaBass
+import Sound.Tidal.VolcaBeats
 
 devices <- midiDevices
+(kys, kt) <- midiSetters devices "SimpleSynth virtual input" 1 keys getNow
+(bss, bst) <- midiSetters devices "SimpleSynth virtual input" 1 bass getNow
+(bts, btt) <- midiSetters devices "SimpleSynth virtual input" 1 beats getNow
 
-(v1, vt1) <- midiSetters devices "SimpleSynth virtual input" 1 volcaKeysController getNow
 
-v1 $ slow 4 $ note (tom "a3 e4")
+kys $ slow 4 $ note (tom "a3 e4")
   # lforate "0.8"
+
+bss $ note (tom "e2") # ctfg "0.2"
+
+
+bts $ drum "bd" # lcp "0.3"
 ```
 
-you can also load `Sound.Tidal.VolcaBass` and `Sound.Tidal.VolcaBeats`.
-See there corresponding params in [the source files](Sound/Tidal/)
+see the source of [Volca Keys](Sound/Tidal/VolcaKeys.hs), [Volca Bass](Sound/Tidal/VolcaBass.hs) and [Volca Beats](Sound/Tidal/VolcaBeats.hs) for a list of params.
